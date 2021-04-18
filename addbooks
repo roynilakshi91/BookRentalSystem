@@ -1,0 +1,33 @@
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient({region: "us-east-1"});
+
+
+exports.handler = (event, context, callback) => {
+    var count = 0 ;
+      const getparams = {
+        TableName: "books",
+        Key:"id"
+    };
+    
+    // const QueryResult = docClient.scan(getparams);
+    // QueryResult.Items.forEach(function(user) {
+    //     console.log("displaying ID"+id);
+    //      id++;
+          
+    //     });
+        
+docClient.scan(getparams, onScan);
+
+function onScan(err, data) {
+  //var id = 0 ;
+    if (err) {
+        console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        // print all the movies
+        console.log("Scan succeeded.");
+        data.Items.forEach(function(users) {
+            count++;
+            console.log("displaying ID"+count);
+            
+          
+        });
